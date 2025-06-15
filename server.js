@@ -26,12 +26,13 @@ app.get("/redis", async (req, res) => {
     res.json({
       nome: user.full_name,
       usuario: `@${user.username}`,
-      foto: user.profile_pic,
-      seguidores: user.followers,
-      seguindo: user.following,
-      publicacoes: user.posts,
-      bio: user.biography,
-      privado: user.is_private
+      foto: user.profile_pic_url_hd,
+      seguidores: user.followers_count,
+      seguindo: user.following_count,
+      publicacoes: user.owner_to_timeline_media?.count || 0,
+      bio: user.bio,
+      privado: user.is_private,
+      verificado: user.is_verified
     });
 
   } catch (err) {
