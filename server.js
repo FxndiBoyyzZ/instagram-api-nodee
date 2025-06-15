@@ -21,19 +21,12 @@ app.get("/redis", async (req, res) => {
       }
     });
 
-    const user = response.data;
+    console.log("🔍 RESPOSTA COMPLETA:", response.data); // 👈 Isso aqui é pra debug
 
-    res.json({
-      nome: user.full_name,
-      usuario: `@${user.username}`,
-      foto: user.profile_pic,
-      seguidores: user.followers,
-      seguindo: user.following,
-      publicacoes: user.posts,
-      bio: user.biography
-    });
+    res.json(response.data); // Envia tudo o que a API retornar
 
   } catch (err) {
+    console.error("❌ Erro:", err.message);
     res.status(500).json({ error: "Erro ao buscar perfil" });
   }
 });
