@@ -21,9 +21,18 @@ app.get("/redis", async (req, res) => {
       }
     });
 
-    console.log("🔍 RESPOSTA COMPLETA:", response.data); // 👈 Isso aqui é pra debug
+    const user = response.data;
 
-    res.json(response.data); // Envia tudo o que a API retornar
+    res.json({
+      nome: user.full_name,
+      usuario: `@${user.username}`,
+      foto: user.profile_pic,
+      seguidores: user.followers,
+      seguindo: user.following,
+      publicacoes: user.posts,
+      bio: user.biography,
+      privado: user.is_private
+    });
 
   } catch (err) {
     console.error("❌ Erro:", err.message);
