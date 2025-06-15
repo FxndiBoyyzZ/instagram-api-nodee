@@ -7,17 +7,14 @@ app.use(cors());
 
 app.get("/redis", async (req, res) => {
   const key = req.query.key;
-  const username = key?.replace("profile-", "")?.replace("@", "");
+  const username = key?.replace("profile-", "").replace("@", "");
 
   if (!username) return res.status(400).json({ error: "Usuário inválido" });
 
   try {
     const response = await axios.get(`https://www.instagram.com/${username}/?__a=1&__d=dis`, {
-      headers: {
-        "User-Agent": "Mozilla/5.0"
-      }
+      headers: { "User-Agent": "Mozilla/5.0" }
     });
-
     const user = response.data.graphql.user;
 
     res.json({
@@ -29,8 +26,7 @@ app.get("/redis", async (req, res) => {
       publicacoes: user.edge_owner_to_timeline_media.count,
       bio: user.biography
     });
-
-  } catch (e) {
+  } catch {
     res.status(404).json({ error: "Usuário não encontrado ou privado" });
   }
 });
